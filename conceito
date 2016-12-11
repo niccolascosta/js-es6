@@ -1,0 +1,13 @@
+Flash arrow
+
+Antes
+let aprovados = avaliacoes
+    .filter(function(prova) { return prova.nota >= 7; })
+    .map(function(prova) { return prova.aluno.nome;});
+
+Depois
+
+let aprovados = avaliacoes
+    .filter(prova => prova.nota >= 7)
+    .map(prova => prova.aluno.nome);
+
