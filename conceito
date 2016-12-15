@@ -69,3 +69,13 @@ Por mais que nossa função não receba parâmetros, podemos ter acesso aos par�
 É uma variável implícita que nos dá acesso a todos os parâmetros passados para a função ou método.
 É claro que a primeira forma, nomear os parâmetros da função, é menos verbosa e mais legível.
 Mas há muitos hacks em JavaScript que podem fazer uso de arguments.
+
+
+Sobre o padrão de projeto Factory
+
+° Ele é utilizado quando precisamos facilitar a criação de um objeto.
+
+° É ideal quando queremos criar objetos similares, com apenas seus detalhes diferentes, que podemos passar nos argumentos da Factory.
+
+° É bom para abstrair a criação de um objeto complexo, já que o programador que utilizar a Factory
+ não precisa necessariamente saber como é feita esta operação.
