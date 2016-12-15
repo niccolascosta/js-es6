@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+
+    class SistemaImpressao {
+
+        constructor() {
+            this._codigo = 2;
+        }
+
+        /*  Nesse caso o this irá dar undefined pois o this
+            imprime(nomes) {
+
+            nomes.forEach(function(nome) {
+                console.log(this);
+                console.log(`${this._codigo}: ${nome}`);
+            });
+        }*/
+
+        imprime(nomes) {
+            // usando arrow function.
+            nomes.forEach(nome => {
+                console.log(this);
+                console.log(`${this._codigo}: ${nome}`);
+            });
+        }
+    }
+
+    let nomes = ['Flávio', 'Nico', 'Douglas'];
+    let si = new SistemaImpressao();
+    si.imprime(nomes);
+
+    class Relogio {
+
+        /*constructor() {
+            this._segundos = 0;
+
+            setInterval(() => console.log(++this._segundos), 1000);
+        }*/
+        /*  Outra forma de resolver.
+            constructor() {
+
+            let self = this; // guardando o this que é a instância da classe `Relogio`
+            this._segundos = 0;
+
+            setInterval(function () {
+                console.log(++self._segundos); // acessando a variável self, que é a instância de `Relogio`
+            }, 1000);
+
+        }*/
+    }
+
+/*    var relogio = new Relogio();*/
+
+    let carro = {
+        velocidade: 100,
+        acelera : () =>  {
+            console.log(this);
+            console.log(`Carro a ${this.velocidade} km por hora!`);
+        }
+    };
+    carro.acelera();
+
+    /*
+    Reflect.apply(Aviao.prototype.voa, this, []);
+    Aviao.prototype.voa.apply(this, []);
+    */
+</script>
+</body>
+</html>
