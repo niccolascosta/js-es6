@@ -79,3 +79,17 @@ Sobre o padrão de projeto Factory
 
 ° É bom para abstrair a criação de um objeto complexo, já que o programador que utilizar a Factory
  não precisa necessariamente saber como é feita esta operação.
+ 
+Retorno do xhr.readyState:
+
+0: requisição ainda não iniciada
+1: conexão com o servidor estabeleciada
+2: requisição recebida
+3: processando requisição
+4: requisição concluída e a resposta esta pronta
+
+Promises (promessas) agora fazem parte da linguagem JavaScript a partir do ES6. Elas representam o resultado futuro de uma ação,
+que pode ser de sucesso ou fracasso. Elas visam tornar códigos assíncronos mais legíveis e fáceis de manter,
+evitando o Callback HELL. Uma ou outra chamada assíncrona não é problemática,
+o problema é quando temos uma sucessão de chamadas assíncronas e o modo tradicional de lidar com elas,
+aninhando callbacks, torna o código difícil de ler e manter, principalmente o tratamento de erros.
