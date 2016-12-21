@@ -23,6 +23,14 @@ class ListaNegociacoes{
         return this._negociacoes.reduce((total, negociacao) => total + negociacao.volume, 0.0);
     }
 
+    ordena(criterio) {
+        this._negociacoes.sort(criterio);
+    }
+
+    inverteOrdem() {
+        this._negociacoes.reverse();
+    }
+
     esvazia(){
         this._negociacoes = [];
         /*Reflect.apply(this._armadilha, this._contexto, [this]);*/

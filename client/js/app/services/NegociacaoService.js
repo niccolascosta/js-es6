@@ -20,6 +20,18 @@ class NegociacaoService {
 
     }
 
+    salvarNegociacao(negociacao){
+        return new Promise((resolve, reject) => {
+            this._http.post('negociacoes', negociacao)
+                .then(response => resolve(response))
+                .catch(erro => {
+                    console.log(erro);
+                    reject("Nao deu certo adicionar negociacao");
+                })
+
+        })
+    }
+
 
     obterNegociacoesDaSemana() {
         return new Promise((resolve, reject) => {
