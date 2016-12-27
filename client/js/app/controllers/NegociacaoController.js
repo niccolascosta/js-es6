@@ -12,13 +12,31 @@ class NegociacaoController {
         this._mensagem = new Bind(new Mensagem(), new MensagemView($("#mensagemView")), 'texto');
         this._service = new NegociacaoService();
         this._ordemAtual = '';
+
+        ConnectionFactory.getConnection()
+            .then(connection => new NegociacaoDao(connection))
+            .then(dao => dao.listaTodos())
+            .then(negociacoes => negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao)))
+            .catch(erro => this._mensagem.texto = erro);
+
     }
 
 
     adiciona(event) {
 
         event.preventDefault();
-        let negociacao = this._criarNegociacao();
+
+        ConnectionFactory.getConnection()
+            .then(connection => {
+                let negociacao = this._criarNegociacao();
+                new NegociacaoDao(connection).adiciona(negociacao).then(() =>{
+                    this._listaNegociacoes.adiciona(negociacao);
+                    this._mensagem.texto = "Negociação adicionada com sucesso";
+                    this._limpaFormulario();
+                })
+            })
+            .catch(erro => this._mensagem.texto = erro);
+        /*let negociacao = this._criarNegociacao();
         this._service.salvarNegociacao(negociacao)
             .then(response => {
                 console.log(response);
@@ -27,17 +45,30 @@ class NegociacaoController {
             .catch(erro => this._mensagem.texto = erro);
         //this._listaNegociacoes.adiciona();
         //this._mensagem.texto = "Negociação adicionada com sucesso!";
-        this._limpaFormulario();
+        this._limpaFormulario();*/
 
     }
 
     apaga() {
-        this._listaNegociacoes.esvazia();
-        this._mensagem.texto = "Negociação apagadas com sucesso!";
+        ConnectionFactory.getConnection()
+            .then(connection => new NegociacaoDao(connection))
+            .then(dao => dao.apagaTodos())
+            .then(mensagem => {
+                this._listaNegociacoes.esvazia();
+                this._mensagem.texto = mensagem;
+            })
+            .catch(erro => this._mensagem.texto = erro);
+
+
     }
 
     importaNegociacoes() {
         this._service.obterNegociacoes()
+            .then(negociacoes =>
+                negociacoes.filter(negociacao =>
+                    !this._listaNegociacoes.negociacoes.some(negociacaoExistente =>
+                        JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente))
+            ))
             .then(negociacoes => negociacoes.forEach(negociacao => {
                 this._listaNegociacoes.adiciona(negociacao);
                 this._mensagem.texto = 'Negociações do período importadas'
@@ -57,8 +88,8 @@ class NegociacaoController {
     _criarNegociacao() {
         return new Negociacao(
             DateHelper.textoParaData(this._inputData.value),
-            this._inputQuantidade.value,
-            this._inputValor.value
+            parseInt(this._inputQuantidade.value),
+            parseFloat(this._inputValor.value)
         );
     }
 
