@@ -1,6 +1,7 @@
 class HttpService {
 
-    get(url) {
+    /*  requisição com XMLHttpRequest();
+        get(url) {r
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open('GET', url);
@@ -16,9 +17,31 @@ class HttpService {
             }
             xhr.send();
         })
+    }*/
+
+    _handleErrors(res){
+        if(!res.ok) throw new Error(res.statusText);
+        return res;
     }
 
-    post(url, dado) {
+    get(url){
+
+        return fetch(url)
+            .then(res => this._handleErrors(res))
+            .then(res => res.json());
+
+    }
+
+    post(url, dado){
+        return fetch(url, {
+            headers: {'Content-type' : 'application/json'},
+            method: 'post',
+            body: JSON.stringify(dado, this._replacer)
+            })
+            .then(res => this._handleErrors(res))
+    }
+
+    /*post(url, dado) {
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.open("POST", url, true);
@@ -34,7 +57,7 @@ class HttpService {
             };
             xhr.send(JSON.stringify(dado, this._replacer));
         });
-    }
+    }*/
 
     _replacer(key, value) {
         if (value && typeof value === 'object'){
