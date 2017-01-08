@@ -95,3 +95,5 @@ o problema é quando temos uma sucessão de chamadas assíncronas e o modo tradi
 aninhando callbacks, torna o código difícil de ler e manter, principalmente o tratamento de erros.
 
 run babel: npm run build
+
+npm install babel-plugin-transform-es2015-modules-systemjs@6.9.0 --save-dev

@@ -1,4 +1,4 @@
-class ListaNegociacoes{
+export class ListaNegociacoes{
 
     constructor(armadilha){
         this._negociacoes = [];

@@ -1,4 +1,4 @@
-class HttpService {
+export class HttpService {
 
     /*  requisição com XMLHttpRequest();
         get(url) {r

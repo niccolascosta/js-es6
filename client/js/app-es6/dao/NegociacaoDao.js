@@ -1,4 +1,5 @@
-class NegociacaoDao {
+import {Negociacao} from "../models/Negociacao";
+export class NegociacaoDao {
 
     constructor(connection) {
         this._connection = connection;
@@ -38,7 +39,6 @@ class NegociacaoDao {
             cursor.onsuccess = event => {
 
                 let atual = event.target.result;
-
                 if (atual) {
                     let dado = atual.value;
                     negociacoes.push(new Negociacao(dado._data, dado._quantidade, dado._valor));
@@ -47,8 +47,7 @@ class NegociacaoDao {
                     resolve(negociacoes);
                 }
 
-
-            }
+            };
 
             cursor.onerror = event => {
 

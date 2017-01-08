@@ -1,4 +1,9 @@
-class NegociacaoService {
+import {HttpService} from "./HttpService";
+import {ConnectionFactory} from "./ConnectionFactory";
+import {NegociacaoDao} from "../dao/NegociacaoDao";
+import {Negociacao} from "../models/Negociacao";
+
+export class NegociacaoService {
 
     constructor() {
         this._http = new HttpService();
@@ -11,9 +16,8 @@ class NegociacaoService {
             this.obterNegociacoesDaSemanaAnterior(),
             this.obterNegociacoesDaSemanaRetrasada()
         ]).then(periodos => {
-            let negociacoes = periodos.reduce((dados, periodo) => dados.concat(periodo), [])
+            return periodos.reduce((dados, periodo) => dados.concat(periodo), [])
                 .map(dado => new Negociacao(new Date(dado.data), dado.quantidade, dado.valor));
-            return negociacoes;
         }).catch(erro => {
             throw new Error(erro);
         });
@@ -83,7 +87,7 @@ class NegociacaoService {
             .then(connection => new NegociacaoDao(connection))
             .then(dao => dao.listaTodos())
             .catch(erro => {
-                console.log(erro)
+                console.log(erro);
                 throw new Error('Não foi possível obter as negociações');
             });
     }
@@ -94,7 +98,7 @@ class NegociacaoService {
             .then(dao => dao.apagaTodos())
             .then(() => 'Negociações apagadas com sucesso.')
             .catch(erro => {
-                console.log(erro)
+                console.log(erro);
                 throw new Error('Não foi possível apagar as negociações');
             });
     }
